@@ -5,18 +5,13 @@ import PyPDF2
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():    
+    return {"message": "Welcome to the PDF Text Extractor API"}
+
 @app.get("/extract-text")
 def extract_text():
-    pdf_path = os.path.join("pdfs", "cover.pdf")
-    if not os.path.exists(pdf_path):
-        return JSONResponse(status_code=404, content={"error": "PDF not found"})
-
     try:
-        with open(pdf_path, "rb") as f:
-            reader = PyPDF2.PdfReader(f)
-            text = ""
-            for page in reader.pages:
-                text += page.extract_text() or ""
-        return {"text": text}
+        return {"text": "This is a sample text"}
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
